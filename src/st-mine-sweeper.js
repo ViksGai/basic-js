@@ -1,5 +1,3 @@
-import { NotImplementedError } from '../extensions/index.js';
-
 /**
  * In the popular Minesweeper game you have a board with some mines and those cells
  * that don't contain a mine have a number in it that indicates the total number of mines
@@ -23,7 +21,30 @@ import { NotImplementedError } from '../extensions/index.js';
  *  [1, 1, 1]
  * ]
  */
-export default function minesweeper (/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+export default function minesweeper ( matrix ) {
+  const res =  matrix.map(arr => arr.map(() => 0));
+
+  for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      if(matrix[row][col]) {
+        increaseValue(res, row-1, col-1);
+        increaseValue(res, row-1, col);
+        increaseValue(res, row-1, col+1);
+        increaseValue(res, row, col-1);
+        increaseValue(res, row, col+1);
+        increaseValue(res, row+1, col);
+        increaseValue(res, row+1, col-1);
+        increaseValue(res, row+1, col+1);
+      }
+    }
+  }
+
+  return res;
+
+}
+
+const increaseValue = (res, row, col) => {
+  if(res[row] && (res[row][col] !== undefined)) {
+    res[row][col]++;
+  }
 }
